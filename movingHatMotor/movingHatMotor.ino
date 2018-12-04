@@ -13,6 +13,8 @@
 */
 int motorPin = 9;  // define the pin the motor is connected to
                    // (if you use pin 9,10,11 or 3you can also control speed)
+int in1Pin = 10;
+int in2Pin = 11;
 
 /*
 * setup() – this function runs once when you turn your Arduino on
@@ -22,6 +24,8 @@ int motorPin = 9;  // define the pin the motor is connected to
 void setup()
 {
 pinMode(motorPin, OUTPUT);
+pinMode(in1Pin, OUTPUT);
+pinMode(in2Pin, OUTPUT);
 }
 
 /*
@@ -44,7 +48,15 @@ motorOnThenOff();
 void motorOnThenOff(){
   int onTime = 2500;  //the number of milliseconds for the motor to turn on for
   int offTime = 1000; //the number of milliseconds for the motor to turn off for
-  
+
+  digitalWrite(in1Pin, HIGH);
+  digitalWrite(in2Pin, LOW);
+  digitalWrite(motorPin, HIGH); // turns the motor On
+  delay(onTime);                // waits for onTime milliseconds
+  digitalWrite(motorPin, LOW);  // turns the motor Off
+  delay(offTime);               // waits for offTime milliseconds
+  digitalWrite(in1Pin, LOW);
+  digitalWrite(in2Pin, HIGH);
   digitalWrite(motorPin, HIGH); // turns the motor On
   delay(onTime);                // waits for onTime milliseconds
   digitalWrite(motorPin, LOW);  // turns the motor Off
@@ -63,6 +75,7 @@ void motorOnThenOffWithSpeed(){
   
   int offSpeed = 50;  // a number between 0 (stopped) and 255 (full speed)
   int offTime = 1000; //the number of milliseconds for the motor to turn off for
+
   
   analogWrite(motorPin, onSpeed);   // turns the motor On
   delay(onTime);                    // waits for onTime milliseconds
@@ -83,3 +96,5 @@ void motorAcceleration(){
     delay(delayTime);           // waits for delayTime milliseconds
   }
 }
+
+
