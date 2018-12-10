@@ -3,7 +3,7 @@
  *  works with a variety of peripherals, such as photoresistors, the L2P3D chip,
  *  and a motor in order to create a "controlling" effect. It effectively allows
  *  the user to wave their hand in a circle over the photoresistors, and that controls
- *  the speed and direction o a motor, which is placed delicately below a hat, creating
+ *  the speed and direction of a motor, which is placed delicately below a hat, creating
  *  an image that the hat is moving via magic control.
  *  
  *  Authors: Audrey Brooke, Justin He, Maximilian Lee
@@ -42,9 +42,9 @@ void loop() {
   Serial.println(covered);
   Serial.print("LastSensed: ");
   Serial.println(lastSensed);
-  if (covered != -1 && covered != lastSensed) {
+  if (covered != -1 && covered != lastSensed) { // check if hand has moved to a new sensor
     if (covered > lastSensed) {
-      if (covered == numPins - 1 && lastSensed == 0)
+      if (covered == numPins - 1 && lastSensed == 0) // check if looping around array
       {
         // turn clockwise
         Serial.println("clockwise");
@@ -55,7 +55,7 @@ void loop() {
         motorDir = 1;
       }
     } else if (covered < lastSensed) {
-      if (covered == 0 && lastSensed == numPins - 1) {
+      if (covered == 0 && lastSensed == numPins - 1) { // check if looping around array
           // turn clockwise
           Serial.println("counter clockwise");
           motorDir = 1;
@@ -67,6 +67,7 @@ void loop() {
     }
     if (lastSensed != covered) {
       lastSensed = covered;
+      // set motor direction
       if (motorDir == 0) {
         digitalWrite(in1Pin, LOW);
         digitalWrite(in2Pin, HIGH);
@@ -85,7 +86,6 @@ void loop() {
  *  
  */
 void activateMotor() {
-  Serial.println("why");
   digitalWrite(motorPin, HIGH);
   delay(1500);
   digitalWrite(motorPin, LOW);
